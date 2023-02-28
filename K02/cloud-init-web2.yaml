@@ -1,0 +1,49 @@
+#cloud-config
+users: # Collection bzw Sammlung von den Users
+  - name: ubuntu # Der Benutzername des ersten also Standart benutzers
+    sudo: ALL=(ALL) NOPASSWD:ALL # Sudo Regeln für diesen Benutzer
+    groups: users, admin # Gruppen, zu denen der Benutzer gehört
+    home: /home/ubuntu # Home-Verzeichnis des Benutzers
+    shell: /bin/bash # Die Shell des Benutzers
+    lock_passwd: false # Benutzer-Password nicht blockieren
+    plain_text_passwd: 'password' # Der Hash für das Benutzer-Password       
+ssh_pwauth: true # SSH Authentisierung einschalten
+disable_root: false # Access für die Benutzter um auf den Root zuzugreifen
+packages: # Eine Liste von Packages welche installiert werden
+  - apache2 # Package für Webserver
+  - curl # Package um zBs URL's aufzurufen
+  - wget # Package um zBs HTML Files zu benutzen
+  - php # Package um Server Tasks mit PHP zu automatisieren
+  - libapache2-mod-php # Package mit PHP_Modul für Apache2
+  - php-mysqli # Package mit MySQL-Modul für PHP
+write_files:
+  - path: /var/www/html/info.php
+    content: <?php phpinfo(); ?>  
+    permission: '0644'
+  - path: /var/www/html/db.php
+    content: |
+      <?php
+        //database
+        $servername = "127.0.0.1";
+        $username = "admin";
+        $password = "password";
+        $dbname = "mysql";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) { 
+          die("Connection failed: " . $conn->connect_error)
+        }
+
+        $sql = "select Host, User from mysql.user;";
+        $result = $conn->query($sql);
+        while($row = $result->fetch_assoc()){
+                echo($row["Host"] . " / " . $row["User"] . "<br />");
+        }
+        //var_dump($result); 
+      ?>  
+    permission: '0644'
+runcmd: 
+ - "chown ubuntu:ubuntu /var/www/html/info.php /var/www/html/db.php"
+
