@@ -5,7 +5,7 @@ users: # Collection bzw Sammlung von den Users
     groups: users, admin # Gruppen, zu denen der Benutzer gehört
     home: /home/ubuntu # Home-Verzeichnis des Benutzers
     shell: /bin/bash # Die Shell des Benutzers
-    lock_passwd: false # Benutzer-Password nicht blockieren
+    lock_passwd: false # Benutzer kann sich mit Passwort einloggen
     plain_text_passwd: 'password' # Der Hash für das Benutzer-Password       
 ssh_pwauth: true # SSH Authentisierung einschalten
 disable_root: false # Access für die Benutzter um auf den Root zuzugreifen
@@ -16,6 +16,7 @@ packages: # Eine Liste von Packages welche installiert werden
   - php # Package um Server Tasks mit PHP zu automatisieren
   - libapache2-mod-php # Package mit PHP_Modul für Apache2
   - php-mysqli # Package mit MySQL-Modul für PHP
+  - adminer # Package für Administrator um mit GUI die DB zu managen
 write_files:
   - path: /var/www/html/info.php
     content: <?php phpinfo(); ?>  
@@ -46,4 +47,6 @@ write_files:
     permission: '0644'
 runcmd: 
  - "chown ubuntu:ubuntu /var/www/html/info.php /var/www/html/db.php"
+ - "sudo a2enconf adminer"
+ - "sudo systemctl restart apache2"
 

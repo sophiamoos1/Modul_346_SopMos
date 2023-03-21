@@ -5,44 +5,12 @@ users: # Collection bzw Sammlung von den Users
     groups: users, admin # Gruppen, zu denen der Benutzer gehört
     home: /home/ubuntu # Home-Verzeichnis des Benutzers
     shell: /bin/bash # Die Shell des Benutzers
-    lock_passwd: false # Benutzer-Password nicht blockieren
+    lock_passwd: false # Benutzer kann sich mit Passwort einloggen
     plain_text_passwd: 'password' # Der Hash für das Benutzer-Password       
 ssh_pwauth: true # SSH Authentisierung einschalten
 disable_root: false # Access für die Benutzter um auf den Root zuzugreifen
 packages: # Eine Liste von Packages welche installiert werden
-  - apache2 # Package für Webserver
-  - curl # Package um zBs URL's aufzurufen
-  - wget # Package um zBs HTML Files zu benutzen
-  - php # Package um Server Tasks mit PHP zu automatisieren
-  - libapache2-mod-php # Package mit PHP_Modul für Apache2
-  - php-mysqli # Package mit MySQL-Modul für PHP
-  - adminer # Package für Administrator um mit GUI die DB zu managen
-write_files:
-  - path: /var/www/html/db.php
-    content: |
-      <?php
-        //database
-        $servername = "127.0.0.1";
-        $username = "admin";
-        $password = "password";
-        $dbname = "mysql";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) { 
-          die("Connection failed: " . $conn->connect_error)
-        }
-
-        $sql = "select Host, User from mysql.user;";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()){
-                echo($row["Host"] . " / " . $row["User"] . "<br />");
-        }
-        //var_dump($result); 
-      ?>  
-    permission: '0644'
+  - mariadb-server
 runcmd: 
- - "chown ubuntu:ubuntu /var/www/html/db.php"
- - "sudo a2enconf adminer"
+  - "sudo sed -i's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf"
 
