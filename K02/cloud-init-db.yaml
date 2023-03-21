@@ -12,5 +12,7 @@ disable_root: false # Access für die Benutzter um auf den Root zuzugreifen
 packages: # Eine Liste von Packages welche installiert werden
   - mariadb-server
 runcmd: 
+  - "sudo mysql -sfu root -e "GRANT ALL ON *.* TO 'admin'@'%' IDENTIFIED BY'password'"
   - "sudo sed -i's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf"
+  - "sudo systemctl restart mariadb.service"
 
