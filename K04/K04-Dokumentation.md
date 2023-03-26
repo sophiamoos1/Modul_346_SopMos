@@ -1,0 +1,14 @@
+# K04 Dokumentation K04
+
+## A.)
+
+
+
+*** 
+
+## B.)
+
+
+**Key:**
+
+*AAAAB3NzaC1yc2EAAAADAQABAAABAQCChvm8U9bNWKZ2LBlRFvTQfLgdlNm5tKiA+GVqGzwN7hm6RsNp234mxQNSCoXfBkOYQObUxSJU12nnQaLUtm4ztrzwbU0Z6Dab8tqgt9k5QyuGmCRDSxVaK4skoWfoivGt/h9nqMqwroWVm11hTlLJfCQE8fj9bNUMye7KktxnaC8kgp5VfTCiH1aYPEaB4oyx8diToSNR3KERm5AZhIJ4SP8ho5YLRSaUaqIGvOxlCETov6p1p7lhQuZiMV/8YBzqsth7Jl8fNu7EaBerxJpRYSbWrSRAlJimOHTnJk6eaZLpkkRfvzERep046ze2BwuU56ZimMuWJAh/isjlwblP*
